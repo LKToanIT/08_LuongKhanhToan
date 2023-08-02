@@ -1,7 +1,7 @@
-create table fresher.exercise3 (
-             ID mediumint auto_increment primary key,
-             ten varchar(30),
-			 BirthDate date,
-             Gender enum('male','famale','unknown'),
-             IsDeletedFlag bool
-             );
+CREATE TABLE fresher.exercise3 (
+    ID MEDIUMINT AUTO_INCREMENT PRIMARY KEY,
+    ten VARCHAR(30),
+    BirthDate DATE,
+    Gender ENUM('male', 'famale', 'unknown'),
+    IsDeletedFlag BOOL
+);
