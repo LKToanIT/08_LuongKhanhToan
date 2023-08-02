@@ -1,4 +1,4 @@
-CREATE TABLE fresher.exercise3 (
+CREATE TABLE `fresher.exercise3` (
     ID MEDIUMINT AUTO_INCREMENT PRIMARY KEY,
     Ten VARCHAR(30) NOT NULL,
     BirthDate DATE NOT NULL,
