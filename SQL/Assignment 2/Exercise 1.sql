@@ -7,7 +7,7 @@ CREATE TABLE `fresher.Trainee` (
     ET_IQ TINYINT CHECK (0 <= ET_IQ <= 20),
     ET_Gmath TINYINT CHECK (0 <= ET_IQ <= 20),
     ET_English TINYINT CHECK (0 <= ET_IQ <= 50),
-    Training_Class VARCHAR(10),
+    Training_Class CHAR(10),
     Evaluation_Note TEXT
 );
              
