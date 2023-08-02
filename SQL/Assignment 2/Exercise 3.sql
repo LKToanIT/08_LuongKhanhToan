@@ -1,7 +1,7 @@
 create table fresher.exercise3 (
-             ID tinyint auto_increment primary key,
-             ten char(30),
+             ID mediumint auto_increment primary key,
+             ten varchar(30),
 			 BirthDate date,
-             Gender bit,
+             Gender enum('male','famale','unknown'),
              IsDeletedFlag bool
              );

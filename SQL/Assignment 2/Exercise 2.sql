@@ -1,7 +1,7 @@
 create table fresher.exercise2 (
-             ID tinyint auto_increment primary key,
-             _Name char(20),
-             _Code varchar(5),
+             ID mediumint auto_increment primary key,
+             _Name varchar(20),
+             _Code char(5),
              ModifiedDate date
              );
             

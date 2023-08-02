@@ -1,14 +1,14 @@
 create database fresher;
 create table fresher.Trainee(
              TraineeID bit auto_increment primary key,
-             Full_Name varchar(30),
+             Full_Name nvarchar(30),
              Birth_Date date,
-             Gender varchar(10),
-             ET_IQ bit,
-             ET_Gmath bit,
-             ET_English bit,
+             Gender enum('male','famale','unknown'),
+             ET_IQ bit check (0 <= ET_IQ <= 20),
+             ET_Gmath bit check (0 <= ET_IQ <= 20),
+             ET_English bit check (0 <= ET_IQ <= 50),
              Training_Class varchar(10),
-             Evaluation_Note varchar(100)
+             Evaluation_Note text
              );
              
 alter table fresher.trainee
