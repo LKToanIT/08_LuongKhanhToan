@@ -1,4 +1,4 @@
-create database fresher;
+CREATE DATABASE fresher;
 CREATE TABLE fresher.Trainee (
     TraineeID BIT AUTO_INCREMENT PRIMARY KEY,
     Full_Name NVARCHAR(30),
@@ -11,5 +11,5 @@ CREATE TABLE fresher.Trainee (
     Evaluation_Note TEXT
 );
              
-alter table fresher.trainee
-add VTI_account varchar(50) not null unique;
+ALTER TABLE fresher.trainee
+ADD VTI_account VARCHAR(50) NOT NULL UNIQUE;
