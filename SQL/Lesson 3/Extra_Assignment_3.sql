@@ -41,25 +41,14 @@ delete from Fresher_Management;
 drop table Fresher_Management;
 
 
--- question 2:
-select month(Birth_Date), count(TraineeID) from Fresher_Management
-group by month(Birth_Date);
-
-
--- question 2.1:
-select* from Fresher_Management
-order by month(Birth_Date) desc, TraineeID desc ; -- mặc định sẽ là sắp xếp theo thứ tự tăng dần 
-
-
--- question 2.2:
-SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
-select* from Fresher_Management
+-- question 2: nhóm các thực tập sinh có cùng tháng sinh trong một hàng
+select group_concat(Full_Name), month(Birth_Date) from Fresher_Management -- group_concat() 
 group by month(Birth_Date);
 
 
 -- question 3: lấy ra thông tin thực tập sinh có tên dài nhất
 SELECT TraineeID, Full_Name, Birth_Date, Gender, CHAR_LENGTH(Full_Name) FROM Fresher_Management 
-WHERE CHAR_LENGTH(Full_Name) IN (SELECT MAX(CHAR_LENGTH(Full_Name)) FROM Fresher_Management);
+WHERE CHAR_LENGTH(Full_Name) = (SELECT MAX(CHAR_LENGTH(Full_Name)) FROM Fresher_Management);
 
 
 -- question 4:
