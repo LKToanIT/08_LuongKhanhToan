@@ -83,7 +83,7 @@ FROM
     employee_skill_table t2 ON t1.employee_number = t2.employee_number WHERE t2.skill_code LIKE '%java%';
 
 
--- question 4: lấy ra danh sách phòng ban có hơn 2 nhân viên
+-- question 4: lấy ra danh sách phòng ban có >=3 nhân viên
 SELECT 
     COUNT(employee_name), department_name
 FROM
@@ -91,7 +91,7 @@ FROM
         INNER JOIN
     employee_table t2 ON t1.department_number = t2.department_number
 GROUP BY department_name
-HAVING COUNT(employee_name) > 2;
+HAVING COUNT(employee_name) >= 3;
 
 
 -- question 5: lấy ra danh sách nhân viên của mỗi phòng ban
@@ -99,16 +99,19 @@ SELECT
     GROUP_CONCAT(t2.employee_name), t1.department_name
 FROM
     fresher_department t1
-        INNER JOIN
+        LEFT JOIN
     employee_table t2 ON t1.department_number = t2.department_number
 GROUP BY t1.department_name;
 
 
 -- question 6: lấy ra danh sách nhân viên có hơn 1 skill
-SELECT
-    t1.employee_name, t2.skill_code
+SELECT 
+    ET.*, -- lẩy ra toàn bộ các cột trong bảng employee
+    COUNT(EST.employee_number) AS TOTAL
 FROM
-    employee_table t1
-        INNER JOIN
-    employee_skill_table t2 ON t1.employee_number = t2.employee_number
+    employee_table ET
+        JOIN
+    employee_skill_table EST ON ET.employee_number = EST.employee_number
+GROUP BY ET.employee_number
+HAVING COUNT(EST.employee_number) > 1;
 
