@@ -52,19 +52,17 @@ SELECT * FROM view_q4;
 
 -- cách 2:
 CREATE OR REPLACE VIEW vw_DepartmentMaxAccount AS
-	SELECT 		D.*, COUNT(A.DepartmentID)
-	FROM		Department D
-	INNER JOIN 	`Accounttable` A ON D.DepartmentID = A.DepartmentID
-	GROUP BY	D.DepartmentID
-	HAVING		COUNT(A.DepartmentID) = (
-										SELECT 		COUNT(A.DepartmentID)
-										FROM		Department D
-										INNER JOIN 	`Accounttable` A ON D.DepartmentID = A.DepartmentID
-										GROUP BY	D.DepartmentID
-										HAVING		COUNT(A.DepartmentID)
-										ORDER BY	COUNT(A.DepartmentID) DESC
-										LIMIT		1
-										);
+    SELECT D.*, COUNT(A.DepartmentID)
+    FROM Department D INNER JOIN
+        accounttable A ON D.DepartmentID = A.DepartmentID
+    GROUP BY D.DepartmentID
+    HAVING COUNT(A.DepartmentID) = (SELECT MAX(mot.soluong)
+        FROM
+            (SELECT 
+                COUNT(A.DepartmentID) AS soluong
+            FROM Department D
+            INNER JOIN accounttable A ON D.DepartmentID = A.DepartmentID
+            GROUP BY D.DepartmentID) AS mot);
 SELECT * FROM vw_DepartmentMaxAccount;
 
 
@@ -88,3 +86,9 @@ WITH view_q5 AS
 )
 SELECT 	*
 FROM 	view_q5;
+
+
+select max(mot.soluong)	from (select COUNT(A.DepartmentID) as soluong
+										FROM		Department D
+										INNER JOIN 	`Accounttable` A ON D.DepartmentID = A.DepartmentID
+										GROUP BY	D.DepartmentID) as mot;
