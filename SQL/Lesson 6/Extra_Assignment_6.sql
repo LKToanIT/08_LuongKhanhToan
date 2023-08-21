@@ -103,8 +103,6 @@ BEGIN
     DECLARE deleted_count INT;
 	DELETE FROM projects WHERE project_completed_on IS NOT NULL AND DATE_ADD(project_start_date, INTERVAL 3 MONTH) > CURDATE();
     SET deleted_count = ROW_COUNT();
-    -- Print the count of deleted records
-    -- PRINT CONCAT('Deleted ', deleted_count, ' records.');
     SELECT deleted_count;
     
 END$$
@@ -116,7 +114,7 @@ CALL remove_project_done();
 -- question c:
 DROP PROCEDURE IF EXISTS module_inprogress;
 DELIMITER $$
-CREATE PROCEDURE module_inprogress(IN in_projectid TINYINT UNSIGNED)
+CREATE PROCEDURE module_inprogress(IN in_projectid char(5))
 BEGIN
 
 	SELECT 		project_id, module_id
@@ -126,20 +124,20 @@ BEGIN
 END$$
 DELIMITER ;
 
-call module_inprogress(1);
+call module_inprogress('p05');
 
 
 -- question d:
 DROP PROCEDURE IF EXISTS employee_joined;
 DELIMITER $$
-CREATE PROCEDURE employee_joined(IN in_employee_id TINYINT UNSIGNED)
+CREATE PROCEDURE employee_joined(IN in_employee_id char(5))
 BEGIN
 
-	SELECT 		employee_id, CONCAT(employee_last_name, ' ', employee_first_name)
+	SELECT 		employee_id, CONCAT(employee_last_name, ' ', employee_first_name) as fullname
     FROM		employee
-    WHERE		employee_id NOT IN (SELECT employee_id FROM work_done);
+    WHERE		in_employee_id = employee_id and in_employee_id NOT IN (SELECT DISTINCT (employee_id) FROM work_done);
 
 END$$
 DELIMITER ;
 
-call employee_joined(1);
+call employee_joined('e05');

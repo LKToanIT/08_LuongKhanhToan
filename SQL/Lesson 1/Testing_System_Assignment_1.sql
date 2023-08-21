@@ -47,6 +47,7 @@ CREATE TABLE accounttable (
     email VARCHAR(20) NOT NULL,
     username VARCHAR(30) NOT NULL,
     fullname VARCHAR(30) NOT NULL,
+    gender enum('male', 'female', 'unknown'),
     departmentid TINYINT NOT NULL,
     positionid TINYINT NOT NULL,
     createdate DATETIME DEFAULT NOW()          -- now() được sử dụng với kiểu dữ liệu datetime
@@ -56,23 +57,23 @@ DROP TABLE accounttable;
 ALTER TABLE accounttable
 ADD CONSTRAINT fk_department FOREIGN KEY (departmentid)
 		REFERENCES department (departmentid),	
-ADD CONSTRAINT fk_positiontable FOREIGN KEY (positionid)
-        REFERENCES positiontable (positionid);
+ADD CONSTRAINT fk_position FOREIGN KEY (positionid)
+        REFERENCES position (positionid);
         
 ALTER TABLE accounttable
 MODIFY COLUMN email VARCHAR(50) NOT NULL; -- đầu vào dữ liệu email lớn hơn so với khai báo ban đầu
 
-INSERT INTO accounttable(Email								, Username			, FullName				, DepartmentID	, PositionID, CreateDate)
-VALUE 				('haidang29productions@gmail.com'	, 'dangblack'		,'Nguyen Hai Dang'		,   '5'			,   '1'		,'2020-03-05'),
-					('account1@gmail.com'				, 'quanganh'		,'Tong Quang Anh'		,   '1'			,   '2'		,'2020-03-05'),
-                    ('`Account`@gmail.com'				, 'vanchien'		,'Nguyen Van Chien'		,   '2'			,   '3'		,'2020-03-07'),
-                    ('account3@gmail.com'				, 'cocoduongqua'	,'Duong Do'				,   '3'			,   '4'		,'2020-03-08'),
-                    ('account4@gmail.com'				, 'doccocaubai'		,'Nguyen Chien Thang'	,   '5'			,   '4'		,'2020-03-10'),
-                    ('dapphatchetngay@gmail.com'		, 'khabanh'			,'Ngo Ba Kha'			,   '5'			,   '3'		,'2020-04-05'),
-                    ('songcodaoly@gmail.com'			, 'huanhoahong'		,'Bui Xuan Huan'		,   '7'			,   '2'		,'2020-04-05'),
-                    ('sontungmtp@gmail.com'				, 'tungnui'			,'Nguyen Thanh Tung'	,   '5'			,   '1'		,'2020-04-07'),
-                    ('duongghuu@gmail.com'				, 'duongghuu'		,'Duong Van Huu'		,   '9'			,   '2'		,'2020-04-07'),
-                    ('vtiaccademy@gmail.com'			, 'vtiaccademy'		,'Vi Ti Ai'				,   '10'		,   '1'		,'2020-04-09');
+INSERT INTO accounttable(Email								, Username			, FullName			, Gender   , DepartmentID	, PositionID, CreateDate)
+VALUE 				('haidang29productions@gmail.com'	, 'dangblack'		,'Nguyen Hai Dang'		,'Male'    ,      '5'		,   '1'		,'2020-03-05'),
+					('account1@gmail.com'				, 'quanganh'		,'Tong Quang Anh'		,'Male'    ,      '1'		,   '2'		,'2020-03-05'),
+                    ('`Account`@gmail.com'				, 'vanchien'		,'Nguyen Van Chien'		,'Male'    ,      '2'		,   '3'		,'2020-03-07'),
+                    ('account3@gmail.com'				, 'cocoduongqua'	,'Duong Do'				,'Female'  ,      '3'		,   '4'		,'2020-03-08'),
+                    ('account4@gmail.com'				, 'doccocaubai'		,'Nguyen Chien Thang'	,'Female'  ,      '5'		,   '4'		,'2020-03-10'),
+                    ('dapphatchetngay@gmail.com'		, 'khabanh'			,'Ngo Ba Kha'			,'Unknown' ,      '5'		,   '3'		,'2020-04-05'),
+                    ('songcodaoly@gmail.com'			, 'huanhoahong'		,'Bui Xuan Huan'		,'Female'  ,      '7'		,   '2'		,'2020-04-05'),
+                    ('sontungmtp@gmail.com'				, 'tungnui'			,'Nguyen Thanh Tung'	,'Unknown' ,      '5'		,   '1'		,'2020-04-07'),
+                    ('duongghuu@gmail.com'				, 'duongghuu'		,'Duong Van Huu'		,'Male'    ,      '9'		,   '2'		,'2020-04-07'),
+                    ('vtiaccademy@gmail.com'			, 'vtiaccademy'		,'Vi Ti Ai'				,'Unknown' ,      '10'		,   '1'		,'2020-04-09');
 
 
 
@@ -165,6 +166,7 @@ CREATE TABLE question (
     createdate DATETIME DEFAULT NOW(),
     CONSTRAINT fk_categoryquestion FOREIGN KEY (categoryid) REFERENCES categoryquestion(categoryid)
 );
+DROP TABLE question;
 -- thêm dữ liệu cho bảng question
 INSERT INTO Question	(Content			, CategoryID, TypeID	, CreatorID	, CreateDate )
 VALUE 					(N'Câu hỏi về Java'	,	10		,   '1'		,   '1'		,'2019-03-05'),
@@ -237,6 +239,9 @@ CREATE TABLE examquestion (
     questionid TINYINT NOT NULL,
     CONSTRAINT fk_examid FOREIGN KEY (examid) REFERENCES exam(examid)
 );
+DROP TABLE examquestion;
+ALTER TABLE examquestion
+ADD CONSTRAINT fk_question1 FOREIGN KEY (questionid) REFERENCES question(questionid);
 -- thêm dữ liệu cho bảng examquestion
 INSERT INTO examquestion(questionid)
 VALUE 						(1),
